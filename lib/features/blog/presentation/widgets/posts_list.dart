@@ -1,9 +1,11 @@
+import 'package:blog_graphql_zero/core/routing/routes.dart';
 import 'package:blog_graphql_zero/features/blog/domain/entities/post.dart';
 import 'package:flutter/material.dart';
 
 class PostsList extends StatelessWidget {
-  const PostsList({Key? key, required List<Post> this.posts}) : super(key: key);
   final List<Post> posts;
+
+  const PostsList({Key? key, required this.posts}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,12 @@ class PostsList extends StatelessWidget {
                 style: const TextStyle(fontSize: 14.0),
               ),
               trailing: const Icon(Icons.keyboard_arrow_right),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushNamed(
+                  postDetailsRoute,
+                  arguments: post,
+                );
+              },
             ),
           );
         });

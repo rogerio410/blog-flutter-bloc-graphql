@@ -1,8 +1,7 @@
 import 'package:blog_graphql_zero/core/injection/injection.dart';
-import 'package:blog_graphql_zero/features/blog/presentation/cubit/all_posts_cubit.dart';
-import 'package:blog_graphql_zero/features/blog/presentation/pages/home_page.dart';
+import 'package:blog_graphql_zero/core/routing/route_generator.dart';
+import 'package:blog_graphql_zero/core/routing/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 void main() {
@@ -20,13 +19,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: BlocProvider<AllPostsCubit>(
-        // create: (context) => AllPostsCubit(allPosts),
-        create: (_) => getIt(),
-        child: const HomePage(
-          title: "Flutter Demo: Clean + Bloc(Cubit) + GetId",
-        ),
-      ),
+      initialRoute: homeRoute,
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }
