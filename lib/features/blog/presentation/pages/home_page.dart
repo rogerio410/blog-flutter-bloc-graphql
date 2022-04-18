@@ -1,4 +1,6 @@
+import 'package:blog_graphql_zero/core/injection/injection.dart';
 import 'package:blog_graphql_zero/features/blog/presentation/cubit/all_posts_cubit.dart';
+import 'package:blog_graphql_zero/features/blog/presentation/cubit/authentication_cubit.dart';
 import 'package:blog_graphql_zero/features/blog/presentation/widgets/posts_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +13,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late final AllPostsCubit allPostsCubit;
+
+  @override
+  void initState() {
+    allPostsCubit = getIt();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,9 +31,17 @@ class _HomePageState extends State<HomePage> {
             onPressed: () => reloadPosts(context),
             icon: const Icon(Icons.refresh_outlined),
           ),
+          IconButton(
+            onPressed: () {
+              final authenticationCubit = context.read<AuthenticationCubit>();
+              authenticationCubit.loggedOut();
+            },
+            icon: const Icon(Icons.logout),
+          ),
         ],
       ),
       body: BlocConsumer<AllPostsCubit, AllPostsState>(
+        bloc: allPostsCubit,
         listener: (context, state) {
           if (state is AllPostsError) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -59,7 +77,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void reloadPosts(BuildContext context) {
-    final allPostsCubit = context.read<AllPostsCubit>();
+    // final allPostsCubit = context.read<AllPostsCubit>();
     allPostsCubit.getAllPosts();
   }
 

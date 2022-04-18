@@ -12,10 +12,10 @@ part 'all_posts_state.dart';
 class AllPostsCubit extends Cubit<AllPostsState> {
   final GetAllPosts _getAllPosts;
 
-  AllPostsCubit(this._getAllPosts) : super(const AllPostsInitial());
+  AllPostsCubit(this._getAllPosts) : super(AllPostsInitial());
 
   Future<void> getAllPosts() async {
-    emit(const AllPostsLoading());
+    emit(AllPostsLoading());
     final either = await _getAllPosts(NoParams());
     either.fold(
       (failure) => emit(const AllPostsError('Error on load')),

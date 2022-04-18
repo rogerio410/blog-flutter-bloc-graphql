@@ -3,34 +3,27 @@ part of 'all_posts_cubit.dart';
 @immutable
 abstract class AllPostsState extends Equatable {
   const AllPostsState();
-}
-
-class AllPostsInitial extends Equatable implements AllPostsState {
-  const AllPostsInitial();
 
   @override
   List<Object> get props => [];
 }
 
-class AllPostsLoading extends Equatable implements AllPostsState {
-  const AllPostsLoading();
+class AllPostsInitial extends AllPostsState {}
 
-  @override
-  List<Object> get props => [];
-}
+class AllPostsLoading extends AllPostsState {}
 
-class AllPostsLoaded extends Equatable implements AllPostsState {
+class AllPostsLoaded extends AllPostsState {
   final List<Post> posts;
   const AllPostsLoaded(this.posts);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [posts];
 }
 
-class AllPostsError extends Equatable implements AllPostsState {
+class AllPostsError extends AllPostsState {
   final String message;
   const AllPostsError(this.message);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [message];
 }
