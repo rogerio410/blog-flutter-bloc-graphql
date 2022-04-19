@@ -17,6 +17,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    // TODO: Move to Route generation
     allPostsCubit = getIt();
     super.initState();
   }
