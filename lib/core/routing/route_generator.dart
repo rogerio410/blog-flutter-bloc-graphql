@@ -1,10 +1,13 @@
+import 'package:blog_graphql_zero/core/injection/injection.dart';
 import 'package:blog_graphql_zero/core/routing/routes.dart';
 import 'package:blog_graphql_zero/features/blog/domain/entities/post.dart';
+import 'package:blog_graphql_zero/features/blog/presentation/cubit/all_posts_cubit.dart';
 import 'package:blog_graphql_zero/features/blog/presentation/pages/home_page.dart';
 import 'package:blog_graphql_zero/features/blog/presentation/pages/login_page.dart';
 import 'package:blog_graphql_zero/features/blog/presentation/pages/post_page.dart';
-import 'package:blog_graphql_zero/features/blog/presentation/widgets/authentication_check.dart';
+import 'package:blog_graphql_zero/features/blog/presentation/pages/splash_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RouteGenerator {
   static final errorPage = MaterialPageRoute(builder: (_) {
@@ -23,9 +26,9 @@ class RouteGenerator {
     final routeName = settings.name;
 
     switch (routeName) {
-      case authCheckRoute:
+      case splashRoute:
         return MaterialPageRoute(
-          builder: (_) => const AuthenticationCheck(),
+          builder: (_) => const SplashPage(),
         );
       case loginRoute:
         return MaterialPageRoute(
@@ -33,7 +36,10 @@ class RouteGenerator {
         );
       case homeRoute:
         return MaterialPageRoute(
-          builder: (_) => const HomePage(),
+          builder: (_) => BlocProvider<AllPostsCubit>(
+            create: (_) => getIt(),
+            child: const HomePage(),
+          ),
         );
       case postDetailsRoute:
         if (args is Post) {

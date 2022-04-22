@@ -34,7 +34,7 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i4.GraphQLClient>(() => registerModule.gqlClient);
   gh.lazySingleton<_i5.InternetConnectionChecker>(
       () => registerModule.connectionChecker);
-  gh.lazySingleton<_i6.LoginCubit>(() =>
+  gh.factory<_i6.LoginCubit>(() =>
       _i6.LoginCubit(authenticationCubit: get<_i3.AuthenticationCubit>()));
   gh.lazySingleton<_i7.NetworkInfo>(
       () => _i8.NetworkInfoImpl(get<_i5.InternetConnectionChecker>()));

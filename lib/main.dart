@@ -16,15 +16,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthenticationCubit>(
-      create: (_) => getIt(),
+    return BlocProvider<AuthenticationCubit>.value(
+      value: AuthenticationCubit(),
       child: MaterialApp(
         title: 'Flutter Demo: Clean + Bloc + GetId',
         theme: ThemeData(
           primarySwatch: Colors.blue,
           fontFamily: 'Roboto',
         ),
-        initialRoute: authCheckRoute,
+        initialRoute: splashRoute,
         onGenerateRoute: RouteGenerator.generateRoute,
       ),
     );

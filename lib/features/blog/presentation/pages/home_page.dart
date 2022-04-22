@@ -1,4 +1,5 @@
 import 'package:blog_graphql_zero/core/injection/injection.dart';
+import 'package:blog_graphql_zero/core/routing/routes.dart';
 import 'package:blog_graphql_zero/features/blog/presentation/cubit/all_posts_cubit.dart';
 import 'package:blog_graphql_zero/features/blog/presentation/cubit/authentication_cubit.dart';
 import 'package:blog_graphql_zero/features/blog/presentation/widgets/posts_list.dart';
@@ -13,17 +14,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late final AllPostsCubit allPostsCubit;
-
-  @override
-  void initState() {
-    // TODO: Move to Route generation
-    allPostsCubit = getIt();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
+    void reloadPosts(BuildContext context) {
+      final allPostsCubit = context.read<AllPostsCubit>();
+      allPostsCubit.getAllPosts();
+    }
+
+    Widget buildLoading() {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    Widget buildInitialState() {
+      return const Center(
+        child: Text("Clique on refresh button de load blog posts"),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Flutter Demo: Clean + Bloc(Cubit) + GetId'),
@@ -36,13 +45,17 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               final authenticationCubit = context.read<AuthenticationCubit>();
               authenticationCubit.loggedOut();
+              // push to spash
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                splashRoute,
+                (route) => false,
+              );
             },
             icon: const Icon(Icons.logout),
           ),
         ],
       ),
       body: BlocConsumer<AllPostsCubit, AllPostsState>(
-        bloc: allPostsCubit,
         listener: (context, state) {
           if (state is AllPostsError) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -74,23 +87,6 @@ class _HomePageState extends State<HomePage> {
         tooltip: 'New Post',
         child: const Icon(Icons.add),
       ),
-    );
-  }
-
-  void reloadPosts(BuildContext context) {
-    // final allPostsCubit = context.read<AllPostsCubit>();
-    allPostsCubit.getAllPosts();
-  }
-
-  Widget buildLoading() {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
-  }
-
-  Widget buildInitialState() {
-    return const Center(
-      child: Text("Clique on refresh button de load blog posts"),
     );
   }
 }
