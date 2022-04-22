@@ -34,7 +34,7 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
           .map((post) => PostModel.fromJson(post))
           .cast<PostModel>()
           .toList();
-    } on Exception catch (exception) {
+    } on Exception {
       throw exceptions.ServerException();
     }
   }

@@ -1,4 +1,3 @@
-import 'package:blog_graphql_zero/core/injection/injection.dart';
 import 'package:blog_graphql_zero/features/blog/presentation/cubit/authentication_cubit.dart';
 import 'package:blog_graphql_zero/features/blog/presentation/cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +29,7 @@ class _LoginPageState extends State<LoginPage> {
             return Scaffold(
               appBar: AppBar(
                 title: const Text('Login'),
+                automaticallyImplyLeading: false,
               ),
               body: Center(
                 child: ElevatedButton(

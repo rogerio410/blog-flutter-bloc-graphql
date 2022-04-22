@@ -1,4 +1,3 @@
-import 'package:blog_graphql_zero/core/injection/injection.dart';
 import 'package:blog_graphql_zero/core/routing/routes.dart';
 import 'package:blog_graphql_zero/features/blog/presentation/cubit/all_posts_cubit.dart';
 import 'package:blog_graphql_zero/features/blog/presentation/cubit/authentication_cubit.dart';
@@ -14,6 +13,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late final String user;
+
+  @override
+  void initState() {
+    super.initState();
+    user = context.read<AuthenticationCubit>().state.user;
+  }
+
   @override
   Widget build(BuildContext context) {
     void reloadPosts(BuildContext context) {
@@ -35,7 +42,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter Demo: Clean + Bloc(Cubit) + GetId'),
+        title: Text('Flutter Demo: Clean + Bloc(Cubit) + GetId (user: $user)'),
         actions: <Widget>[
           IconButton(
             onPressed: () => reloadPosts(context),
@@ -43,11 +50,9 @@ class _HomePageState extends State<HomePage> {
           ),
           IconButton(
             onPressed: () {
-              final authenticationCubit = context.read<AuthenticationCubit>();
-              authenticationCubit.loggedOut();
               // push to spash
               Navigator.of(context).pushNamedAndRemoveUntil(
-                splashRoute,
+                logoutRoute,
                 (route) => false,
               );
             },

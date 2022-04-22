@@ -29,10 +29,17 @@ class RouteGenerator {
       case splashRoute:
         return MaterialPageRoute(
           builder: (_) => const SplashPage(),
+          settings: const RouteSettings(name: splashRoute),
         );
       case loginRoute:
         return MaterialPageRoute(
           builder: (_) => const LoginPage(),
+          settings: const RouteSettings(name: loginRoute),
+        );
+      case logoutRoute:
+        return MaterialPageRoute(
+          builder: (_) => const SplashPage(isLogout: true),
+          settings: const RouteSettings(name: logoutRoute),
         );
       case homeRoute:
         return MaterialPageRoute(
@@ -40,6 +47,7 @@ class RouteGenerator {
             create: (_) => getIt(),
             child: const HomePage(),
           ),
+          settings: const RouteSettings(name: homeRoute),
         );
       case postDetailsRoute:
         if (args is Post) {
@@ -47,6 +55,7 @@ class RouteGenerator {
             builder: (_) => PostPage(
               post: args,
             ),
+            settings: const RouteSettings(name: postDetailsRoute),
           );
         }
         return errorPage;

@@ -1,6 +1,10 @@
 part of 'authentication_cubit.dart';
 
 abstract class AuthenticationState extends Equatable {
+  final String user;
+
+  const AuthenticationState({this.user = ''});
+
   @override
   List<Object> get props => [];
 }
@@ -9,7 +13,9 @@ abstract class AuthenticationState extends Equatable {
 // authenticated or not on app start.
 class AuthenticationUninitialized extends AuthenticationState {}
 
-class AuthenticationAuthenticated extends AuthenticationState {}
+class AuthenticationAuthenticated extends AuthenticationState {
+  const AuthenticationAuthenticated(String user) : super(user: user);
+}
 
 class AuthenticationUnauthenticated extends AuthenticationState {}
 
